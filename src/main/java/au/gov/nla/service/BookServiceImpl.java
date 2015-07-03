@@ -22,8 +22,7 @@ public class BookServiceImpl implements BookService
 	@Transactional
 	public List<Book> getBookListByPerson(int personId)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return this.bookDAO.getBookListByPerson(personId);
 	}
 
 	@Override

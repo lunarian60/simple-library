@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import au.gov.nla.model.Book;
 import au.gov.nla.model.Person;
@@ -49,7 +50,7 @@ public class HomeController
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model)
+	public String home(Model model)
 	{
 		List<Person> persons = this.personService.getPersonList();
 		List<Book> books = this.bookService.getBookList();
@@ -58,6 +59,18 @@ public class HomeController
 		model.addAttribute("books", books);
 
 		return "home";
+	}
+
+	@RequestMapping(value = "/book", method = RequestMethod.GET)
+	public String books(Model model,
+			@RequestParam(value = "personId") String personId)
+	{
+		List<Book> books = this.bookService.getBookListByPerson(Integer
+				.valueOf(personId));
+
+		model.addAttribute("books", books);
+
+		return "book";
 	}
 
 }

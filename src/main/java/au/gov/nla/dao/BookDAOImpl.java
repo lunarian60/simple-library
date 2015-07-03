@@ -23,7 +23,16 @@ public class BookDAOImpl implements BookDAO
 	@Override
 	public List<Book> getBookListByPerson(int personId)
 	{
-		// TODO Auto-generated method stub
+		Session session = this.sessionFactory.getCurrentSession();
+		List<Book> books = (List<Book>) session
+				.createQuery(
+						"from Book as b where b.person.personId = :personId")
+				.setParameter("personId", personId).list();
+
+		if (books.size() > 0)
+		{
+			return books;
+		}
 		return null;
 	}
 
